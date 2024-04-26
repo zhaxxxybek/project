@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile Details</title>
+</head>
+<body>
+<h1>User Profile</h1>
+<!-- Отображение аватара пользователя -->
+<img th:src="${user.avatarUrl != null ? user.avatarUrl : '/path/to/default/avatar'}" alt="User Avatar" style="max-width: 200px;">
+
+<p>Username: <span th:text="${user.fullName}"></span></p>
+<p>Email: <span th:text="${user.email}"></span></p>
+
+<!-- Форма для смены аватара -->
+<form action="/upload-avatar" method="post" enctype="multipart/form-data">
+  <input type="file" name="avatar">
+  <button type="submit">Change Avatar</button>
+</form>
+
+<h2>User Posts</h2>
+<ul>
+  <li th:each="post : ${posts}">
+    <p>Post Title: <span th:text="${post.title}"></span></p>
+    <p>Post Content: <span th:text="${post.content}"></span></p>
+    <a th:href="@{/posts/{postId}/activity(postId=${post.id})}">Статистика поста</a>
+  </li>
+</ul>
+</body>
+</html>

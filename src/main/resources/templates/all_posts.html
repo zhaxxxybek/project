@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<h1>All Posts</h1>
+<ul>
+    <li th:each="post : ${posts}">
+        <div>
+            <h2 th:text="${post.title}"></h2>
+            <p th:text="${post.content}"></p>
+            <p>Author: <a th:href="@{/profile-details/{userId}(userId=${post.author.id})}" th:text="${post.author.fullName}"></a></p>
+            <p>Publish Date: <span th:text="${post.getFormattedPublishDate()}"></span></p>
+            <img th:if="${post.photoUrl}" th:src="${post.photoUrl}" alt="Post Photo" style="max-width: 300px;">
+            <p>Likes: <span th:text="${post.likes}"></span></p>
+            <form th:action="@{/posts/{postId}/like(postId=${post.id})}" method="post">
+                <button type="submit" style="background: none; border: none; cursor: pointer;"><i class="far fa-thumbs-up"></i></button>
+            </form>
+            <form th:action="@{/posts/{postId}/unlike(postId=${post.id})}" method="post">
+                <button type="submit" style="background: none; border: none; cursor: pointer;"><i class="far fa-thumbs-down"></i></button>
+            </form>
+            <form th:action="@{/posts/{postId}/comments(postId=${post.id})}" method="post">
+                <input type="text" name="content" placeholder="Add a comment...">
+                <button type="submit">Add Comment</button>
+            </form>
+            <ul>
+                <li th:each="comment : ${post.comments}">
+                    <p><a th:href="@{/profile-details/{userId}(userId=${comment.author.id})}" th:text="${comment.author.fullName}"></a>: <span th:text="${comment.content}"></span></p>
+                    <p th:text="${comment.getTimeElapsed()}"></p>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

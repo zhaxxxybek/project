@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Activity</title>
+</head>
+<body>
+<h1>Post Activity</h1>
+<div>
+  <h2>Title: <span th:text="${post.title}"></span></h2>
+  <h2>Author: <span th:text="${post.author.fullName}"></span></h2>
+  <p>Content: <span th:text="${post.content}"></span></p>
+  <p>Likes: <span th:text="${likesCount}"></span></p>
+  <p>Comments: <span th:text="${commentsCount}"></span></p>
+</div>
+
+<div>
+  <h2>Top 10 Posts by Likes</h2>
+  <ul>
+    <li th:each="topPost : ${topPostsByLikes}">
+      <p>Title: <span th:text="${topPost.title}"></span> | Likes: <span th:text="${topPost.likes}"></span></p>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h2>Top 10 Posts by Comments</h2>
+  <ul>
+    <li th:each="topPost : ${topPostsByComments}">
+      <p>Title: <span th:text="${topPost.title}"></span> | Comments: <span th:text="${topPost.comments.size()}"></span></p>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
